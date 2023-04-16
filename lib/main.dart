@@ -1,19 +1,29 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+
+import 'Contato.dart';
+
+import 'package:http/http.dart' as http;
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  final TextEditingController _nomeController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _senhaController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Emakers jr',
+      title: 'Emakers Jr',
       home: Scaffold(
         backgroundColor: Colors.white, // definir cor de fundo branca
         appBar: AppBar(
           title: Text(
-            'Emakers jr',
+            'Emakers Jr',
             style: TextStyle(
               color: Colors.purple, // definir cor roxa para o título
               fontSize: 28, // definir tamanho do título
@@ -39,8 +49,7 @@ class MyApp extends StatelessWidget {
                 ),
                 SizedBox(height: 16),
                 TextFormField(
-                  controller:
-                      TextEditingController(), // controlador do campo de texto
+                  controller: _nomeController,
                   decoration: InputDecoration(
                     labelText: 'Nome',
                     border: OutlineInputBorder(
@@ -67,7 +76,7 @@ class MyApp extends StatelessWidget {
                 ),
                 SizedBox(height: 16),
                 TextFormField(
-                  controller: TextEditingController(),
+                  controller: _emailController,
                   decoration: InputDecoration(
                     labelText: 'E-mail',
                     border: OutlineInputBorder(
@@ -96,7 +105,7 @@ class MyApp extends StatelessWidget {
                 ),
                 SizedBox(height: 16),
                 TextFormField(
-                  controller: TextEditingController(),
+                  controller: _senhaController,
                   decoration: InputDecoration(
                     labelText: 'Senha',
                     border: OutlineInputBorder(
@@ -150,12 +159,32 @@ class MyApp extends StatelessWidget {
                 ),
                 SizedBox(height: 16),
                 ElevatedButton(
-                  onPressed: () {
-                    if (Form.of(context)!.validate()) {
-                      // validação do formulário
-                      // Ação a ser realizada quando o formulário é válido
-                      print('Formulário válido');
+                  onPressed: () async {
+                    //if (Form.of(context).validate()) {
+                    // Cria um objeto Contato com os dados do formulário
+                    Contato contato = Contato(
+                      nome: _nomeController.text,
+                      email: _emailController.text,
+                      senha: _senhaController.text,
+                    );
+
+                    // Faz a requisição POST para a API
+                    final response = await http.post(
+                      Uri.parse('http://localhost:8080/addcontato'),
+                      headers: {'Content-Type': 'application/json'},
+                      body: jsonEncode(contato.toJson()),
+                    );
+
+                    // Verifica se a requisição foi bem-sucedida
+                    if (response.statusCode == 200) {
+                      // Ação a ser realizada quando a requisição é bem-sucedida
+                      print('Contato adicionado com sucesso!');
+                    } else {
+                      // Ação a ser realizada quando a requisição falha
+                      print(
+                          'Erro ao adicionar contato: ${response.statusCode}');
                     }
+                    //}
                   },
                   child: Text('Enviar'),
                   style: ElevatedButton.styleFrom(
