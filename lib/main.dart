@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         backgroundColor: Colors.white, // definir cor de fundo branca
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             'Emakers Jr',
             style: TextStyle(
               color: Colors.purple, // definir cor roxa para o título
@@ -38,8 +38,8 @@ class MyApp extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                SizedBox(height: 16),
-                Text(
+                const SizedBox(height: 16),
+                const Text(
                   'Cadastro', // subtítulo
                   style: TextStyle(
                     fontSize: 20,
@@ -47,10 +47,10 @@ class MyApp extends StatelessWidget {
                     color: Colors.black, // cor do subtítulo
                   ),
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 TextFormField(
                   controller: _nomeController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Nome',
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
@@ -74,10 +74,10 @@ class MyApp extends StatelessWidget {
                     return null;
                   },
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 TextFormField(
                   controller: _emailController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'E-mail',
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
@@ -103,10 +103,10 @@ class MyApp extends StatelessWidget {
                     return null;
                   },
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 TextFormField(
                   controller: _senhaController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Senha',
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
@@ -130,10 +130,10 @@ class MyApp extends StatelessWidget {
                     return null;
                   },
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 TextFormField(
                   controller: TextEditingController(),
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Confirmar senha',
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
@@ -157,7 +157,7 @@ class MyApp extends StatelessWidget {
                     return null;
                   },
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () async {
                     //if (Form.of(context).validate()) {
@@ -186,10 +186,10 @@ class MyApp extends StatelessWidget {
                     }
                     //}
                   },
-                  child: Text('Enviar'),
                   style: ElevatedButton.styleFrom(
                     primary: Colors.orange, // cor do botão
                   ),
+                  child: const Text('Enviar'),
                 ),
               ],
             ),
