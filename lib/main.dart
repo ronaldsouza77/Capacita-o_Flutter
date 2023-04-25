@@ -6,6 +6,8 @@ import 'Contato.dart';
 
 import 'package:http/http.dart' as http;
 
+import 'Listagem_contatos.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -14,6 +16,8 @@ class MyApp extends StatelessWidget {
   final TextEditingController _nomeController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _senhaController = TextEditingController();
+
+  String errorMessage = '';
 
   @override
   Widget build(BuildContext context) {
@@ -174,18 +178,45 @@ class MyApp extends StatelessWidget {
                       headers: {'Content-Type': 'application/json'},
                       body: jsonEncode(contato.toJson()),
                     );
+                    Navigator.of(context).push(
+                        // ignore: use_build_context_synchronously
+                        MaterialPageRoute(
+                            builder: (BuildContext context) => ContatoList()));
 
                     // Verifica se a requisição foi bem-sucedida
                     if (response.statusCode == 200) {
                       // Ação a ser realizada quando a requisição é bem-sucedida
+
                       print('Contato adicionado com sucesso!');
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Contato adicionado com sucesso!'),
+                        ),
+                      );
                     } else {
                       // Ação a ser realizada quando a requisição falha
-                      print(
-                          'Erro ao adicionar contato: ${response.statusCode}');
+                      errorMessage =
+                          'Erro ao adicionar contato'; // atualiza a mensagem de erro
                     }
-                    //}
+                    // exibe a mensagem de erro
+                    if (errorMessage.isNotEmpty) {
+                      showDialog(
+                        context: context,
+                        builder: (_) => AlertDialog(
+                          title: Text('Erro'),
+                          content: Text(errorMessage),
+                          actions: [
+                            ElevatedButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: Text('OK'),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
                   },
+                  //}
+
                   style: ElevatedButton.styleFrom(
                     primary: Colors.orange, // cor do botão
                   ),
