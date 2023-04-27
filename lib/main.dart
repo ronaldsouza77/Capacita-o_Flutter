@@ -178,10 +178,12 @@ class MyApp extends StatelessWidget {
                       headers: {'Content-Type': 'application/json'},
                       body: jsonEncode(contato.toJson()),
                     );
-                    Navigator.of(context).push(
-                        // ignore: use_build_context_synchronously
-                        MaterialPageRoute(
-                            builder: (BuildContext context) => ContatoList()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => ContatoList()));
+                    // Navigator.push(context)(
+                    //     // ignore: use_build_context_synchronously
+                    //     MaterialPageRoute(
+                    //         builder: (BuildContext context) => ContatoList()));
 
                     // Verifica se a requisição foi bem-sucedida
                     if (response.statusCode == 200) {
